@@ -1,3 +1,4 @@
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class NPuzzle {
@@ -10,8 +11,12 @@ public class NPuzzle {
             grid[i] = scanner.nextLine().split(" ");
         }
 
-        if(solvable(grid)) System.out.println("Solvable");
-        else System.out.println("Not solvable");
+        if(!solvable(grid)) System.out.println("Not solvable");
+        else{
+            System.out.println("Solvable");
+            PriorityQueue<Node> pq = new PriorityQueue<>(new CompareNode());
+            pq.add(new Node(0, grid, null));
+        }
     }
 
     public static boolean solvable(String[][] ar){
