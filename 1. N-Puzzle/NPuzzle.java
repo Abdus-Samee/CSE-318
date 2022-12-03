@@ -31,12 +31,16 @@ public class NPuzzle {
             }
             goal[k-1][k-1] = "*";
 
+            int exploredNodes = 0, expandedNodes = 1;
             while(!pq.isEmpty()){
                 Node n = pq.poll();
-                if(n.equalNode(goal)){
+                exploredNodes++;
+                if(n.equalNode(goal)) {
                     n.printGrid();
+                    System.out.println("Total moves: " + n.moves);
                     break;
                 }
+                n.printGrid();
 
                 int x = 0,y = 0;
                 for(int i = 0; i < k; i++){
@@ -62,6 +66,7 @@ public class NPuzzle {
                     if(!explored.contains(newNode.toString())){
                         pq.add(newNode);
                         explored.add(newNode.toString());
+                        expandedNodes++;
                     }
                 }
                 if(x < k-1){
@@ -77,6 +82,7 @@ public class NPuzzle {
                     if(!explored.contains(newNode.toString())){
                         pq.add(newNode);
                         explored.add(newNode.toString());
+                        expandedNodes++;
                     }
                 }
                 if(y > 0){
@@ -92,6 +98,7 @@ public class NPuzzle {
                     if(!explored.contains(newNode.toString())){
                         pq.add(newNode);
                         explored.add(newNode.toString());
+                        expandedNodes++;
                     }
                 }
                 if(y < k-1){
@@ -107,9 +114,13 @@ public class NPuzzle {
                     if(!explored.contains(newNode.toString())){
                         pq.add(newNode);
                         explored.add(newNode.toString());
+                        expandedNodes++;
                     }
                 }
             }
+
+            System.out.println("Number of explored nodes: " + exploredNodes);
+            System.out.println("Number of expanded nodes: " + expandedNodes);
         }
     }
 
@@ -146,7 +157,7 @@ public class NPuzzle {
 
         for(int i = ar.length-1; i >= 0; i--){
             for(int j = 0; j < ar[i].length; j++){
-                if(ar[i][j] == "*"){
+                if(ar[i][j].equals("*")){
                     ans = i;
                     done = true;
                     break;
