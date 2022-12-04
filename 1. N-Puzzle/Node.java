@@ -5,11 +5,13 @@ public class Node {
     String[][] grid;
     Node prev;
 
-    public Node(int m, String[][] g, Node p){
+    public Node(int m, String[][] g, Node p, int choice){
         moves = m;
         grid = g;
         prev = p;
-        calculateDistHamming();
+
+        if(choice == 1) calculateDistHamming();
+        else calculateDistManhattan();
     }
 
     public void setMoves(int m){ moves = m; }
