@@ -40,7 +40,16 @@ public class Node {
     }
 
     public void calculateDistManhattan(){
+        distManhattan = 0;
+        int k = grid.length;
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[i].length; j++){
+                if(grid[i][j].equals("*")) continue;
 
+                int val = Integer.parseInt(grid[i][j]);
+                distManhattan += (Math.abs((val/k)-i)) + (Math.abs((val%k)-(j+1)));
+            }
+        }
     }
 
     public void printGrid(){
