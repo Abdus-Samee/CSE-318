@@ -1,14 +1,18 @@
 public class Node {
     int moves;
+    int choice;
     int distHamming;
     int distManhattan;
     String[][] grid;
+    String[][] goal;
     Node prev;
 
-    public Node(int m, String[][] g, Node p, int choice){
+    public Node(int m, String[][] g, String[][] h, Node p, int c){
         moves = m;
         grid = g;
+        goal = h;
         prev = p;
+        choice = c;
 
         if(choice == 1) calculateDistHamming();
         else calculateDistManhattan();
@@ -22,32 +26,31 @@ public class Node {
 
     public int getHammingHeuristic(){ return moves + distHamming; }
     public int getManhattanHeuristic(){ return moves + distManhattan; }
+    public int getHeuristicValue(){ return (choice == 1)? getHammingHeuristic():getManhattanHeuristic(); }
 
     public void calculateDistHamming(){
         int ans = 0;
-        int k = 1;
 
         for(int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid[i].length; j++){
                 if(grid[i][j].equals("*")) continue;
-                else if(!grid[i][j].equals(String.valueOf(k))) ans++;
-
-                k++;
+                else if(!grid[i][j].equals(goal[i][j])) ans++;
             }
         }
 
-        distHamming = ans;
+        this.distHamming = ans;
     }
 
     public void calculateDistManhattan(){
-        distManhattan = 0;
+        this.distManhattan = 0;
         int k = grid.length;
         for(int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid[i].length; j++){
-                if(grid[i][j].equals("*")) continue;
-
-                int val = Integer.parseInt(grid[i][j]);
-                distManhattan += (Math.abs((val/k)-i)) + (Math.abs((val%k)-(j+1)));
+                if(!grid[i][j].equals("*")){
+                    int x = (Integer.parseInt(grid[i][j])-1)/k;
+                    int y = (Integer.parseInt(grid[i][j])-1)%k;
+                    this.distManhattan += Math.abs(i-x) + Math.abs(j-y);
+                }
             }
         }
     }
