@@ -3,15 +3,15 @@ public class VariableOrderHeuristic {
 
     public VariableOrderHeuristic(String heuristic) { this.heuristic = heuristic; }
 
-    public Variable getNextVariable(CSP csp, Assignment assignment){
+    public Variable getNextVariable(CSP csp){
         Variable var = null;
         if(this.heuristic.equals("VAH1")){
-            int mn = -1;
+            int mn = Integer.MAX_VALUE;
 
             for(Variable v : csp.variableList){
-                if(assignment.mp.get(v) < mn){
+                if(v.domain.size() < mn){
                     var = v;
-                    mn = var.val;
+                    mn = var.domain.size();
                 }
             }
         }
