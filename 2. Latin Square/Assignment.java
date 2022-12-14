@@ -8,5 +8,5 @@ public class Assignment {
 
     public void add(Variable v, int i) { this.mp.put(v, i); }
 
-    public int getVal(Variable v) { return mp.get(v); }
+    public int getVal(Variable v) { return (mp.get(v) == null) ? 0 : mp.get(v); }
 }
