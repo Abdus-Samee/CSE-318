@@ -11,16 +11,29 @@ public class CSP {
         this.variableList = new ArrayList<>();
     }
 
-    public void updateDomain(){
+    public void updateDomain(Assignment assignment){
         for(Variable v : variableList){
             for(int j = 0; j < varGrid.length; j++){
-                Variable o = varGrid[v.row][j];
-                if(o.val != 0) v.domain.remove(o.val);
+                if(j != v.col){
+                    int val = assignment.getVal(varGrid[v.row][j]);
+                    if(val != 0) v.removeFromDomain(val);
+                }
             }
             for(int i = 0; i < varGrid.length; i++){
-                Variable o = varGrid[i][v.col];
-                if(o.val != 0) v.domain.remove(o.val);
+                if(i != v.row){
+                    int val = assignment.getVal(varGrid[i][v.col]);
+                    if(val != 0) v.removeFromDomain(val);
+                }
             }
+        }
+    }
+
+    public void printGrid(Assignment assignment){
+        for(int i = 0; i < varGrid.length; i++){
+            for(int j = 0; j < varGrid[i].length; j++){
+                System.out.printf(assignment.getVal(varGrid[i][j]) + " ");
+            }
+            System.out.println();
         }
     }
 }
