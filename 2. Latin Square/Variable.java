@@ -26,6 +26,12 @@ public class Variable {
 
     public void setDomain(List<Integer> domain) { this.domain = domain; }
 
+    public void removeFromDomain(int val){
+        int idx = this.domain.indexOf(val);
+
+        if(idx != -1) this.domain.remove(idx);
+    }
+
     public List<Variable> findNeighbours(Variable[][] varGrid){
         List<Variable> ans = new ArrayList<>();
 
