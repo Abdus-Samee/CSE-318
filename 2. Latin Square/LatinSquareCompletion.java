@@ -5,7 +5,7 @@ public class LatinSquareCompletion {
     static int[][] grid;
 
     public static void main(String[] args) {
-        readFromFile("src/data/d-10-01.txt");
+        readFromFile("src/data/d-10-06.txt");
 
         int n = grid.length;
         CSP csp = new CSP(n);
@@ -21,7 +21,7 @@ public class LatinSquareCompletion {
 
         Constraint constraint = new Constraint();
         csp.constraint = constraint;
-        //csp.updateDomain();
+        csp.updateDomain(assignment);
 
         CSPSolver cspSolver = new CSPSolver(grid, "VAH1");
         if(!cspSolver.solveBacktrack(csp, assignment)) System.out.println("No solution.");
