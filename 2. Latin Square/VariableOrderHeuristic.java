@@ -4,15 +4,33 @@ public class VariableOrderHeuristic {
     public VariableOrderHeuristic(String heuristic) { this.heuristic = heuristic; }
 
     public Variable getNextVariable(CSP csp){
-        Variable var = null;
-        if(this.heuristic.equals("VAH1")){
-            int mn = Integer.MAX_VALUE;
+        if(this.heuristic.equals("VAH1")) return firstHeuristic(csp);
 
-            for(Variable v : csp.variableList){
-                if(v.domain.size() < mn){
-                    var = v;
-                    mn = var.domain.size();
-                }
+        return null;
+    }
+
+    public Variable firstHeuristic(CSP csp){
+        Variable var = null;
+        int mn = Integer.MAX_VALUE;
+
+        for(Variable v : csp.variableList){
+            if(v.domain.size() < mn){
+                var = v;
+                mn = var.domain.size();
+            }
+        }
+
+        return var;
+    }
+
+    public Variable secondHeuristic(CSP csp){
+        Variable var = null;
+        int mx = Integer.MIN_VALUE;
+
+        for(Variable v : csp.variableList){
+            if(v.getForwardDegree() > mx){
+                var = v;
+                mx = var.getForwardDegree();
             }
         }
 
