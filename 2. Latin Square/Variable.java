@@ -7,13 +7,16 @@ public class Variable {
     int val;
     int row;
     int col;
+    int forward_degree;
     boolean set;
 
     public Variable(int n, int row, int col){
         this.n = n;
         this.row = row;
         this.col = col;
+        this.forward_degree = 0;
         this.set = false;
+        this.val = -1;
         this.domain = new ArrayList<>();
 
         for(int i = 1; i <= n; i++) this.domain.add(i);
@@ -24,7 +27,9 @@ public class Variable {
         this.set = true;
     }
 
-    public void setDomain(List<Integer> domain) { this.domain = domain; }
+    public void setForwardDegree(int forward_degree) { this.forward_degree = forward_degree; }
+
+    public int getForwardDegree() { return this.forward_degree; }
 
     public void removeFromDomain(int val){
         int idx = this.domain.indexOf(val);
