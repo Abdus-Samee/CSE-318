@@ -23,8 +23,10 @@ public class CSPSolver {
         for(int d : v.domain){
             if(csp.constraint.consistentAssignment(v, d, csp.varGrid, assignment)){
                 assignment.add(v, d);
+                if(!vh.heuristic.equals("VH1")) csp.updateDegree(assignment, v, false);
                 boolean res = solveBacktrack(csp, assignment);
                 if(res) return true;
+                if(!vh.heuristic.equals("VH1")) csp.updateDegree(assignment, v, true);
                 assignment.mp.remove(v);
             }
             //else backtrack
