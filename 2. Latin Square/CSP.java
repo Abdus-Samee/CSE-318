@@ -28,6 +28,33 @@ public class CSP {
         }
     }
 
+    public void calculateDegree(Assignment assignment){
+        for(Variable v : variableList){
+            for(int j = 0; j < varGrid.length; j++){
+                if((j != v.col) && (assignment.getVal(varGrid[v.row][j]) == 0)) v.setForwardDegree(v.getForwardDegree()+1);
+            }
+            for(int i = 0; i < varGrid.length; i++){
+                if((i != v.row) && (assignment.getVal(varGrid[i][v.col]) == 0)) v.setForwardDegree(v.getForwardDegree()+1);
+            }
+        }
+    }
+
+    public void updateDegree(Assignment assignment, Variable v, boolean increase){
+        for(int j = 0; j < varGrid.length; j++){
+            if((j != v.col) && (assignment.getVal(varGrid[v.row][j]) == 0)){
+                if(increase) varGrid[v.row][j].setForwardDegree(varGrid[v.row][j].getForwardDegree()+1);
+                else varGrid[v.row][j].setForwardDegree(varGrid[v.row][j].getForwardDegree()-1);
+            }
+        }
+
+        for(int i = 0; i < varGrid.length; i++){
+            if((i != v.row) && (assignment.getVal(varGrid[i][v.col]) == 0)){
+                if(increase) varGrid[i][v.col].setForwardDegree(varGrid[i][v.col].getForwardDegree()+1);
+                else varGrid[i][v.col].setForwardDegree(varGrid[i][v.col].getForwardDegree()-1);
+            }
+        }
+    }
+
     public void printGrid(Assignment assignment){
         for(int i = 0; i < varGrid.length; i++){
             for(int j = 0; j < varGrid[i].length; j++){
