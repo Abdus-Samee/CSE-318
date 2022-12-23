@@ -5,6 +5,7 @@ public class VariableOrderHeuristic {
 
     public Variable getNextVariable(CSP csp){
         if(this.heuristic.equals("VAH1")) return firstHeuristic(csp);
+        else if(this.heuristic.equals("VAH2")) return secondHeuristic(csp);
 
         return null;
     }
