@@ -5,10 +5,12 @@ public class CSP {
     Constraint constraint;
     Variable[][] varGrid;
     List<Variable> variableList;
+    List<Variable> forwardList;
 
     public CSP(int n){
         this.varGrid = new Variable[n][n];
         this.variableList = new ArrayList<>();
+        this.forwardList = new ArrayList<>();
     }
 
     public void updateDomain(Assignment assignment){
@@ -51,6 +53,47 @@ public class CSP {
             if((i != v.row) && (assignment.getVal(varGrid[i][v.col]) == 0)){
                 if(increase) varGrid[i][v.col].setForwardDegree(varGrid[i][v.col].getForwardDegree()+1);
                 else varGrid[i][v.col].setForwardDegree(varGrid[i][v.col].getForwardDegree()-1);
+            }
+        }
+    }
+
+    public void checkNeighbours(int r, int c, int d, Assignment assignment){
+        this.forwardList.clear();
+
+        for(int j = 0; j < varGrid.length; j++){
+            if((j != c) && (assignment.getVal(varGrid[r][j]) == 0)){
+                if(varGrid[r][j].domain.contains(d)) varGrid[r][j].removeFromDomain(d);
+            }
+        }
+
+        for(int i = 0; i < varGrid.length; i++){
+            if((i != r) && (assignment.getVal(varGrid[i][c]) == 0)){
+                if(varGrid[i][c].domain.contains(d)) varGrid[i][c].removeFromDomain(d);
+            }
+        }
+    }
+
+    public boolean checkEmptyNeighbourDomain(){
+        for(Variable v : this.forwardList){
+            if(v.domain.size() == 0) return true;
+        }
+
+        return false;
+    }
+
+    public void resetDomain(Assignment assignment){
+        for(Variable v : this.variableList){
+            v.clearDomain();
+            v.initDomain();
+
+            for(int j = 0; j < varGrid.length; j++){
+                int a = assignment.getVal(varGrid[v.row][j]);
+                if((j != v.col) && (a != 0)) v.removeFromDomain(a);
+            }
+
+            for(int i = 0; i < varGrid.length; i++){
+                int b = assignment.getVal(varGrid[i][v.col]);
+                if((i != v.row) && (b != 0)) v.removeFromDomain(b);
             }
         }
     }
