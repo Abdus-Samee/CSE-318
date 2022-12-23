@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class CSPSolver {
@@ -23,11 +24,43 @@ public class CSPSolver {
         for(int d : v.domain){
             if(csp.constraint.consistentAssignment(v, d, csp.varGrid, assignment)){
                 assignment.add(v, d);
-                if(!vh.heuristic.equals("VH1")) csp.updateDegree(assignment, v, false);
+                if(!vh.heuristic.equals("VAH1")) csp.updateDegree(assignment, v, false);
                 boolean res = solveBacktrack(csp, assignment);
                 if(res) return true;
-                if(!vh.heuristic.equals("VH1")) csp.updateDegree(assignment, v, true);
+                if(!vh.heuristic.equals("VAH1")) csp.updateDegree(assignment, v, true);
                 assignment.mp.remove(v);
+            }
+            //else backtrack
+        }
+
+        csp.variableList.add(v);
+
+        return false;
+    }
+
+    public boolean solveForwardChecking(CSP csp, Assignment assignment){
+        if(csp.constraint.holds(assignment, csp.varGrid)){
+            this.ans = assignment;
+            return true;
+        }
+
+        Variable v = this.vh.getNextVariable(csp);
+        csp.variableList.remove(v);
+
+        for(int d : v.domain){
+            if(csp.constraint.consistentAssignment(v, d, csp.varGrid, assignment)){
+                assignment.add(v, d);
+                csp.checkNeighbours(v.row, v.col, d, assignment);
+                if(!csp.checkEmptyNeighbourDomain()){
+                    if(!vh.heuristic.equals("VAH1")) csp.updateDegree(assignment, v, false);
+                    boolean res = solveForwardChecking(csp, assignment);
+                    if(res) return true;
+                    if(!vh.heuristic.equals("VAH1")) csp.updateDegree(assignment, v, true);
+                }else{
+
+                }
+                assignment.mp.remove(v);
+                csp.resetDomain(assignment);
             }
             //else backtrack
         }
@@ -44,16 +77,5 @@ public class CSPSolver {
             }
             System.out.println();
         }
-    }
-
-    public int valueOrderHeuristic(Variable[][] varGrid, Variable v) {
-        List<Variable> list = v.findNeighbours(varGrid);
-        for(int d : v.domain){
-            for(Variable n : list){
-                Constraint constraint = new Constraint();
-            }
-        }
-
-        return -1;
     }
 }
