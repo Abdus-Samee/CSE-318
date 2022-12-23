@@ -1,11 +1,15 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Scanner;
 
 public class LatinSquareCompletion {
+    static String solver = "";
+    static String heuristic = "";
     static int[][] grid;
 
     public static void main(String[] args) {
-        readFromFile("src/data/d-10-06.txt");
+        readFromFile("src/data/d-10-01.txt");
+        selectMenu();
 
         int n = grid.length;
         CSP csp = new CSP(n);
@@ -22,10 +26,16 @@ public class LatinSquareCompletion {
         Constraint constraint = new Constraint();
         csp.constraint = constraint;
         csp.updateDomain(assignment);
+        csp.calculateDegree(assignment);
 
-        CSPSolver cspSolver = new CSPSolver(grid, "VAH1");
-        if(!cspSolver.solveBacktrack(csp, assignment)) System.out.println("No solution.");
-        else cspSolver.printCorrectAssignment(csp);
+        CSPSolver cspSolver = new CSPSolver(grid, heuristic);
+        if(solver.equals("backtrack")){
+            if(!cspSolver.solveBacktrack(csp, assignment)) System.out.println("No solution.");
+            else cspSolver.printCorrectAssignment(csp);
+        }else if(solver.equals("forward")){
+            if(!cspSolver.solveForwardChecking(csp, assignment)) System.out.println("No solution.");
+            else cspSolver.printCorrectAssignment(csp);
+        }
     }
 
     public static void readFromFile(String file){
@@ -54,6 +64,27 @@ public class LatinSquareCompletion {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static void selectMenu(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("----------SELECT SOLVER----------");
+        System.out.println("Select Solver:\n(1)Backtracking\n(2)Forward Checking\n");
+        String in = scanner.nextLine();
+        if(in.equals("2")) solver = "forward";
+        else solver = "backtrack";
+        System.out.println("---------------------------------\n");
+
+        System.out.println("----------SELECT HEURISTIC----------");
+        System.out.println("Select Solver:\n(1)VAH1\n(2)VAH2\n(3)VAH3\n(4)VAH4\n(5)VAH5\n");
+        in = scanner.nextLine();
+        if(in.equals("1")) heuristic = "VAH1";
+        else if(in.equals("2")) heuristic = "VAH2";
+        else if(in.equals("3")) heuristic = "VAH3";
+        else if(in.equals("4")) heuristic = "VAH4";
+        else heuristic = "VAH5";
+        System.out.println("----------------------------------\n");
     }
 
     public static void printGrid(){
