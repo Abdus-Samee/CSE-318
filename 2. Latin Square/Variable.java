@@ -14,7 +14,7 @@ public class Variable {
         this.n = n;
         this.row = row;
         this.col = col;
-        this.forward_degree = 0;
+        this.forward_degree = 1;
         this.set = false;
         this.val = -1;
         this.domain = new ArrayList<>();
