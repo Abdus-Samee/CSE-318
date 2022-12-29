@@ -1,0 +1,148 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{multirow}
+\usepackage{multicol}
+
+\title{%
+  \begin{center}
+        \vspace*{1cm}
+            
+        \Huge
+        \textbf{Artificial Intelligence}
+            
+        \vspace{0.5cm}
+        \LARGE
+        CSE - 318
+            
+        \vspace{1.5cm}
+            
+        \textbf{Offline 2: CSP}
+                        
+        \vspace{0.8cm}
+                        
+        \Large
+        Abdus Samee\\
+        ID: 1805021\\
+        Dept: CSE\\
+    \end{center}
+  } 
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\begin{table}[]
+\caption{d-10-01.txt}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+Problem                   & Solver & \multicolumn{1}{l|}{VAH} & \multicolumn{1}{l|}{\#Node} & \multicolumn{1}{l|}{\#BT} & \multicolumn{1}{l|}{Runtime(ms)} \\ \hline
+\multirow{10}{*}{d-10-01} & BT     & VAH1                     & 1666221                     & 1175661                   & 369                              \\ \cline{2-6} 
+ & BT & VAH2 &          &           &       \\ \cline{2-6} 
+ & BT & VAH3 & 199701   & 139139    & 106   \\ \cline{2-6} 
+ & BT & VAH4 & 16070577 & 11743544  & 5549  \\ \cline{2-6} 
+ & BT & VAH5 & 44609700 & 30757043  & 32718 \\ \cline{2-6} 
+ & FC & VAH1 & 224      & 15        & 21    \\ \cline{2-6} 
+ & FC & VAH2 & 42030018 & 13352542  & 1127538  \\ \cline{2-6} 
+ & FC & VAH3 & 58       & 0         & 2     \\ \cline{2-6} 
+ & FC & VAH4 & 60       & 1         & 2     \\ \cline{2-6} 
+ & FC & VAH5 & 437936   & 132553         & 7011      \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\caption{d-10-06.txt}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+Problem                   & Solver & \multicolumn{1}{l|}{VAH} & \multicolumn{1}{l|}{\#Node} & \multicolumn{1}{l|}{\#BT} & \multicolumn{1}{l|}{Runtime(ms)} \\ \hline
+\multirow{10}{*}{d-10-06} & BT     & VAH1                     & 22827754                    & 17073079                  & 7474                             \\ \cline{2-6} 
+ & BT & VAH2 &           &           &        \\ \cline{2-6} 
+ & BT & VAH3 & 149068535 & 111750356 & 63118  \\ \cline{2-6} 
+ & BT & VAH4 & 9291820   & 6894922   & 5871   \\ \cline{2-6} 
+ & BT & VAH5 & 418878129 & 299677832 & 306858 \\ \cline{2-6} 
+ & FC & VAH1 & 58        & 0         & 3      \\ \cline{2-6} 
+ & FC & VAH2 & 10149950  & 3212993   & 345171  \\ \cline{2-6} 
+ & FC & VAH3 & 267       & 18        & 23     \\ \cline{2-6} 
+ & FC & VAH4 & 58        & 0         & 1      \\ \cline{2-6} 
+ & FC & VAH5 & 2312667   & 704661    & 43640  \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[]
+\caption{d-10-07.txt}
+\label{tab:my-table}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+Problem & Solver & \multicolumn{1}{l|}{VAH} & \#Node & \#BT & \multicolumn{1}{l|}{Runtime(ms)} \\ \hline
+\multirow{10}{*}{d-10-07} & BT & VAH1 & 16869841 & 11896723 & 2967 \\ \cline{2-6} 
+ & BT & VAH2 &  &  &  \\ \cline{2-6} 
+ & BT & VAH3 & 17852481 & 12956105 & 3702 \\ \cline{2-6} 
+ & BT & VAH4 & 268089274 & 194450181 & 106006 \\ \cline{2-6} 
+ & BT & VAH5 &  &  &  \\ \cline{2-6} 
+ & FC & VAH1 & 1690 & 134 & 158 \\ \cline{2-6} 
+ & FC & VAH2 & 6632448 & 2060479 & 164631 \\ \cline{2-6} 
+ & FC & VAH3 & 114 & 4 & 23 \\ \cline{2-6} 
+ & FC & VAH4 & 559 & 43 & 42 \\ \cline{2-6} 
+ & FC & VAH5 & 1587285 & 465008 & 34979 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\caption{d-10-08.txt}
+\label{tab:my-table}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+Problem & Solver & \multicolumn{1}{l|}{VAH} & \#Node & \#BT & \multicolumn{1}{l|}{Runtime(ms)} \\ \hline
+\multirow{10}{*}{d-10-08} & BT & VAH1 & 7563136 & 5235939 & 1584 \\ \cline{2-6} 
+ & BT & VAH2 &  &  &  \\ \cline{2-6} 
+ & BT & VAH3 & 20631962 & 14707331 & 5520 \\ \cline{2-6} 
+ & BT & VAH4 &  &  &  \\ \cline{2-6} 
+ & BT & VAH5 &  &  &  \\ \cline{2-6} 
+ & FC & VAH1 & 1143 & 102 & 147 \\ \cline{2-6} 
+ & FC & VAH2 & 17686203 & 5523550 & 512335 \\ \cline{2-6} 
+ & FC & VAH3 & 1351 & 135 & 253 \\ \cline{2-6} 
+ & FC & VAH4 & 136 & 10 & 23 \\ \cline{2-6} 
+ & FC & VAH5 & 4013526 & 1200630 & 126932 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\caption{d-10-09.txt}
+\label{tab:my-table}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+Problem & Solver & \multicolumn{1}{l|}{VAH} & \#Node & \#BT & \multicolumn{1}{l|}{Runtime(ms)} \\ \hline
+\multirow{10}{*}{d-10-09} & BT & VAH1 & 42897048 & 32172897 & 10843 \\ \cline{2-6} 
+ & BT & VAH2 &  &  &  \\ \cline{2-6} 
+ & BT & VAH3 &  &  &  \\ \cline{2-6} 
+ & BT & VAH4 &  &  &  \\ \cline{2-6} 
+ & BT & VAH5 &  &  &  \\ \cline{2-6} 
+ & FC & VAH1 & 58 & 0 & 2 \\ \cline{2-6} 
+ & FC & VAH2 & 11204739 & 3520354 & 340005 \\ \cline{2-6} 
+ & FC & VAH3 & 14859 & 1445 & 363 \\ \cline{2-6} 
+ & FC & VAH4 & 39946 & 4400 & 873 \\ \cline{2-6} 
+ & FC & VAH5 & 183676 & 54441 & 6897 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\caption{d-15-01.txt}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+Problem & Solver & \multicolumn{1}{l|}{VAH} & \#Node & \#BT & \multicolumn{1}{l|}{Runtime(ms)} \\ \hline
+\multirow{10}{*}{d-15-01} & BT & VAH1 & 42897048 & 32172897 & 10843 \\ \cline{2-6} 
+ & BT & VAH2 &  &  &  \\ \cline{2-6} 
+ & BT & VAH3 &  &  &  \\ \cline{2-6} 
+ & BT & VAH4 &  &  &  \\ \cline{2-6} 
+ & BT & VAH5 &  &  &  \\ \cline{2-6} 
+ & FC & VAH1 & 58 & 0 & 2 \\ \cline{2-6} 
+ & FC & VAH2 &  &  &  \\ \cline{2-6} 
+ & FC & VAH3 & 14859 & 1445 & 363 \\ \cline{2-6} 
+ & FC & VAH4 & 39946 & 4400 & 873 \\ \cline{2-6} 
+ & FC & VAH5 &  &  &  \\ \hline
+\end{tabular}
+\end{table}
+
+\end{document}
