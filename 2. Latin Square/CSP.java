@@ -62,13 +62,19 @@ public class CSP {
 
         for(int j = 0; j < varGrid.length; j++){
             if((j != c) && (assignment.getVal(varGrid[r][j]) == 0)){
-                if(varGrid[r][j].domain.contains(d)) varGrid[r][j].removeFromDomain(d);
+                if(varGrid[r][j].domain.contains(d)){
+                    varGrid[r][j].removeFromDomain(d);
+                    this.forwardList.add(varGrid[r][j]);
+                }
             }
         }
 
         for(int i = 0; i < varGrid.length; i++){
             if((i != r) && (assignment.getVal(varGrid[i][c]) == 0)){
-                if(varGrid[i][c].domain.contains(d)) varGrid[i][c].removeFromDomain(d);
+                if(varGrid[i][c].domain.contains(d)){
+                    varGrid[i][c].removeFromDomain(d);
+                    this.forwardList.add(varGrid[i][c]);
+                }
             }
         }
     }
