@@ -8,7 +8,7 @@ public class LatinSquareCompletion {
     static int[][] grid;
 
     public static void main(String[] args) {
-        readFromFile("src/data/d-10-01.txt");
+        readFromFile("src/data/d-15-01.txt");
         selectMenu();
 
         int n = grid.length;
@@ -30,11 +30,25 @@ public class LatinSquareCompletion {
 
         CSPSolver cspSolver = new CSPSolver(grid, heuristic);
         if(solver.equals("backtrack")){
+            long start = System.currentTimeMillis();
             if(!cspSolver.solveBacktrack(csp, assignment)) System.out.println("No solution.");
-            else cspSolver.printCorrectAssignment(csp);
+            else{
+                long end = System.currentTimeMillis();
+                cspSolver.printCorrectAssignment(csp);
+                System.out.println("\nTotal time: " + (end-start) + " ms");
+                System.out.println("Total nodes: " + cspSolver.total_nodes);
+                System.out.println("Backtracks: " + cspSolver.backtracks);
+            }
         }else if(solver.equals("forward")){
+            long start = System.currentTimeMillis();
             if(!cspSolver.solveForwardChecking(csp, assignment)) System.out.println("No solution.");
-            else cspSolver.printCorrectAssignment(csp);
+            else{
+                long end = System.currentTimeMillis();
+                cspSolver.printCorrectAssignment(csp);
+                System.out.println("\nTotal time: " + (end-start) + " ms");
+                System.out.println("Total nodes: " + cspSolver.total_nodes);
+                System.out.println("Backtracks: " + cspSolver.backtracks);
+            }
         }
     }
 
@@ -70,14 +84,13 @@ public class LatinSquareCompletion {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("----------SELECT SOLVER----------");
-        System.out.println("Select Solver:\n(1)Backtracking\n(2)Forward Checking\n");
+        System.out.println("(1)Backtracking\n(2)Forward Checking\n");
         String in = scanner.nextLine();
         if(in.equals("2")) solver = "forward";
         else solver = "backtrack";
-        System.out.println("---------------------------------\n");
 
         System.out.println("----------SELECT HEURISTIC----------");
-        System.out.println("Select Solver:\n(1)VAH1\n(2)VAH2\n(3)VAH3\n(4)VAH4\n(5)VAH5\n");
+        System.out.println("(1)VAH1\n(2)VAH2\n(3)VAH3\n(4)VAH4\n(5)VAH5\n");
         in = scanner.nextLine();
         if(in.equals("1")) heuristic = "VAH1";
         else if(in.equals("2")) heuristic = "VAH2";
