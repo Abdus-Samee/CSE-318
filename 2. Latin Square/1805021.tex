@@ -34,6 +34,19 @@
 \maketitle
 \newpage
 
+\section{Value Order Heuristic}
+The values of the variables were selected in ascending order from their respective domains. For instance, the selection of values for a particular variable starts from $1$ up to $n$ (only the available values were selected). 
+
+
+Any value could be available for a particular variable at any instance of the solution. Suppose we assign the values in ascending order. In that case, the values which are smaller could get assigned to a variable selected first and the rest of the larger values would be available for the remaining variables. The smaller numbers will not be considered for that particular variable if they do not abide by the constraints.
+
+\section{Data Tables}
+Tables containing the data running the Backtracking and Forward Checking methods on all the $6$ test cases have been provided below. For each of the Backtracking and Forward Checking solvers in a particular test case, the best scheme with the variable order heuristic has been selected and marked accordingly. Unfortunately, the VAH2 heuristic could not be run for the Backtracking method along with some other heuristics for both schemes. Those have been marked separately. Those schemes took too much time for them to be recorded.
+
+\section{Conclusion}
+In both the solvers, the VAH1 and VAH3 heuristics gave head-to-head results resulting in the minimum time. Although the VAH3 heuristic is an extended version of the VAH1 scheme and also helps in case of tie-breaker, it also takes a lot more time than the VAH1 scheme due to this tie. So the VAH1 scheme is the best scheme for variable order heuristic considering the runtime. As the VAH1 scheme assigns the variable with the smallest domain size first, so there remains less possibility for any variable to have no possible domain to assign while solving as they have larger domain size than the already assigned variable.
+
+\newpage
 \begin{table}[]
 \caption{d-10-01.txt}
 \begin{tabular}{|c|c|c|c|c|c|}
