@@ -46,6 +46,8 @@ Tables containing the data running the Backtracking and Forward Checking methods
 \section{Conclusion}
 In both the solvers, the VAH1 and VAH3 heuristics gave head-to-head results resulting in the minimum time. Although the VAH3 heuristic is an extended version of the VAH1 scheme and also helps in case of tie-breaker, it also takes a lot more time than the VAH1 scheme due to this tie. So the VAH1 scheme is the best scheme for variable order heuristic considering the runtime. As the VAH1 scheme assigns the variable with the smallest domain size first, so there remains less possibility for any variable to have no possible domain to assign while solving as they have larger domain size than the already assigned variable.
 
+The VAH1 scheme is the best in runtime(minimum runtime) in case of Backtracking. In Forward Checking, this scheme falls behind only in $2$ test cases. This shows that the VAH1 scheme has a good performance in all the test cases on average.
+
 \newpage
 \begin{table}[]
 \caption{d-10-01.txt}
