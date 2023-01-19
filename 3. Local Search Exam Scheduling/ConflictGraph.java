@@ -49,7 +49,9 @@ public class ConflictGraph {
                 days++;
             }
         }else if(constructive_heuristic.equals("saturation degree")){
-                boolean[] used = new boolean[conflicting_courses.size()];
+                boolean[] used = new boolean[conflicting_courses.size()+1];
+                for(Course course : conflicting_courses) course.d = course.getEdgeCount();
+
                 while(conflicting_courses.size() > 0){
                     Course c = heuristic.getNextCourse(conflicting_courses);
                     //System.out.println("selected: " + c.courseId + "index: " + conflicting_courses.indexOf(c) + "\n");
@@ -57,19 +59,37 @@ public class ConflictGraph {
                     for(Course course : c.conflicts){
                         if(course.day != -1) used[course.day] = true;
                     }
-                    for(int i = 1; i <= used.length; i++){
+                    for(int i = 1; i <= conflicting_courses.size(); i++){
                         if(!used[i]){
                             //System.out.println("Assigning day " + i + " to " + c.courseId);
                             c.assignDay(i);
+                            days = Math.max(days, i);
                             break;
                         }
                     }
                     for(Course course : c.conflicts){
                         if(course.day != -1) used[course.day] = false;
                     }
+
+                    //reset degree of the courses conflicting to the selected course
+                    for(Course course : c.conflicts){
+                        if(course.day == -1) course.d--;
+                    }
                 }
         }else if(constructive_heuristic.equals("largest enrollment")){
-            
+            while(conflicting_courses.size() > 0){
+                Course c = heuristic.getNextCourse(conflicting_courses);
+                conflicting_courses.remove(conflicting_courses.indexOf(c));
+                c.assignDay(days);
+                resetDegreeNonConflictingCourses(c, conflicting_courses);
+    
+                //remove c from conflict of all other courses
+                for(Course course : conflicting_courses){
+                    course.conflicts.remove(c);
+                }
+    
+                days++;
+            }
         }
     }
 
