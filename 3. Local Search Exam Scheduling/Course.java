@@ -3,12 +3,14 @@ import java.util.Set;
 
 public class Course {
     int day;
+    int d; //used to calculate degree for second constructive heuristic
     String courseId;
     String enrollment;
     Set<Course> conflicts;
 
     public Course(String courseId, String enrollment) {
         this.day = -1;
+        this.d = -1;
         this.courseId = courseId;
         this.enrollment = enrollment;
         this.conflicts = new HashSet<>();
