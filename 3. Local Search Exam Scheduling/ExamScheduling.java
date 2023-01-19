@@ -18,9 +18,10 @@ public class ExamScheduling {
         ConflictGraph conflictGraph = new ConflictGraph(constructive_heuristic, courses, students);
         conflictGraph.createConflictGraph();
 
-        for(Course c : courses){
-            System.out.println(c.courseId + " " + c.day);
-        }
+        System.out.println("Days: " + conflictGraph.days);
+        // for(Course c : courses){
+        //     System.out.println(c.courseId + " " + c.day);
+        // }
     }
 
     public static void readCourseData(String file){
