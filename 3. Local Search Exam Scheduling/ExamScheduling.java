@@ -13,6 +13,8 @@ public class ExamScheduling {
         readStudentData("src/data/car-f-92.stu");
         selectMenu();
 
+        //System.out.println(constructive_heuristic);
+
         ConflictGraph conflictGraph = new ConflictGraph(constructive_heuristic, courses, students);
         conflictGraph.createConflictGraph();
 
@@ -85,7 +87,7 @@ public class ExamScheduling {
         System.out.println("(1)Largest Degree\n(2)Saturation Degree\n(3)Largest Enrollment\n(4)Random Ordering\n");
         String in = scanner.nextLine();
         if(in.equals("1")) constructive_heuristic = "largest degree";
-        else if(in.equals("2")) constructive_heuristic = "saturation degreee";
+        else if(in.equals("2")) constructive_heuristic = "saturation degree";
         else if(in.equals("3")) constructive_heuristic = "largest enrollment";
         else constructive_heuristic = "random ordering";
         System.out.println("----------------------------------\n");
