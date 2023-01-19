@@ -10,6 +10,7 @@ public class Heuristic{
     public Course getNextCourse(List<Course> courses){
         if(heuristic.equals("largest degree")) return largestDegree(courses);
         else if(heuristic.equals("saturation degree")) return saturationDegree(courses);
+        else if(heuristic.equals("largest enrollment")) return largestEnrollment(courses);
 
         return null;
     }
@@ -38,12 +39,26 @@ public class Heuristic{
                 mx = course.saturationDegree();
                 c = course;
             }else if(course.saturationDegree() == mx){
-                if(course.getEdgeCount() > c.getEdgeCount()){
+                if(course.d > c.d){
                     mx = course.saturationDegree();
                     c = course;
                 }
             }
             //System.out.println("selected: " + c.courseId + "index: " + courses.indexOf(c) );
+        }
+
+        return c;
+    }
+
+    public Course largestEnrollment(List<Course> courses){
+        Course c = null;
+        int mx = Integer.MIN_VALUE;
+
+        for(Course course : courses){
+            if(Integer.parseInt(course.enrollment) > mx){
+                mx = Integer.parseInt(course.enrollment);
+                c = course;
+            }
         }
 
         return c;
