@@ -25,4 +25,12 @@ public class Course {
     public void assignDay(int day) {
         this.day = day;
     }
+
+    public int saturationDegree(){
+        int degree = 0;
+        for(Course c : this.conflicts){
+            if(c.day != -1) degree++;
+        }
+        return degree;
+    }
 }
