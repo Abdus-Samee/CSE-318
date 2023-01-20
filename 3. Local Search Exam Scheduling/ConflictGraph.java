@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ConflictGraph {
@@ -24,42 +25,52 @@ public class ConflictGraph {
         }
 
         //remove non-conflicting courses
-        List<Course> conflicting_courses = new ArrayList<>();
-        for(Course c : courses){
-            if(c.getEdgeCount() == 0){
-                c.assignDay(days);
-            }else conflicting_courses.add(c);
-        }
+        //List<Course> conflicting_courses = new ArrayList<>();
+        // for(Course c : courses){
+        //     if(c.getEdgeCount() == 0){
+        //         c.assignDay(days);
+        //     }else conflicting_courses.add(c);
+        // }
 
         Heuristic heuristic = new Heuristic(constructive_heuristic);
 
         //assign days
         if(constructive_heuristic.equals("largest degree")){
-            while(conflicting_courses.size() > 0){
-                Course c = heuristic.getNextCourse(conflicting_courses);
-                conflicting_courses.remove(conflicting_courses.indexOf(c));
-                c.assignDay(days);
-                resetDegreeNonConflictingCourses(c, conflicting_courses);
+            boolean availableColor[] = new boolean[courses.size()+1];
+            Arrays.fill(availableColor, true);
+            
+            while(courses.size() > 0){
+                Course c = heuristic.getNextCourse(courses);
+                courses.remove(courses.indexOf(c));
+                //c.assignDay(days);
+                //resetDegreeNonConflictingCourses(c, courses);
     
-                //remove c from conflict of all other courses
-                for(Course course : conflicting_courses){
-                    course.conflicts.remove(c);
+                for(Course course : c.conflicts){
+                    if(course.day != -1) availableColor[course.day] = false;
                 }
     
-                days++;
+                for(int i = 1; i <= courses.size(); i++){
+                    if(availableColor[i]){
+                        c.assignDay(i);
+                        days = Math.max(days, i);
+                        break;
+                    }
+                }
+
+                Arrays.fill(availableColor, true);
             }
         }else if(constructive_heuristic.equals("saturation degree")){
-                boolean[] used = new boolean[conflicting_courses.size()+1];
-                for(Course course : conflicting_courses) course.d = course.getEdgeCount();
+                boolean[] used = new boolean[courses.size()+1];
+                for(Course course : courses) course.d = course.getEdgeCount();
 
-                while(conflicting_courses.size() > 0){
-                    Course c = heuristic.getNextCourse(conflicting_courses);
+                while(courses.size() > 0){
+                    Course c = heuristic.getNextCourse(courses);
                     //System.out.println("selected: " + c.courseId + "index: " + conflicting_courses.indexOf(c) + "\n");
-                    conflicting_courses.remove(conflicting_courses.indexOf(c));
+                    courses.remove(courses.indexOf(c));
                     for(Course course : c.conflicts){
                         if(course.day != -1) used[course.day] = true;
                     }
-                    for(int i = 1; i <= conflicting_courses.size(); i++){
+                    for(int i = 1; i <= courses.size(); i++){
                         if(!used[i]){
                             //System.out.println("Assigning day " + i + " to " + c.courseId);
                             c.assignDay(i);
@@ -77,18 +88,52 @@ public class ConflictGraph {
                     }
                 }
         }else if(constructive_heuristic.equals("largest enrollment")){
-            while(conflicting_courses.size() > 0){
-                Course c = heuristic.getNextCourse(conflicting_courses);
-                conflicting_courses.remove(conflicting_courses.indexOf(c));
-                c.assignDay(days);
-                resetDegreeNonConflictingCourses(c, conflicting_courses);
+            boolean[] used = new boolean[courses.size()+1];
+            while(courses.size() > 0){
+                Course c = heuristic.getNextCourse(courses);
+                courses.remove(courses.indexOf(c));
+                //c.assignDay(days);
+                //resetDegreeNonConflictingCourses(c, conflicting_courses);
     
-                //remove c from conflict of all other courses
-                for(Course course : conflicting_courses){
-                    course.conflicts.remove(c);
+                for(Course course : c.conflicts){
+                    if(course.day != -1) used[course.day] = true;
                 }
     
-                days++;
+                for(int i = 1; i <= courses.size(); i++){
+                    if(!used[i]){
+                        c.assignDay(i);
+                        days = Math.max(days, i);
+                        break;
+                    }
+                }
+                
+                for(Course course : c.conflicts){
+                    if(course.day != -1) used[course.day] = false;
+                }
+            }
+        }else if(constructive_heuristic.equals("random")){
+            boolean availableColor[] = new boolean[courses.size()+1];
+            Arrays.fill(availableColor, true);
+
+            while(courses.size() > 0){
+                Course c = heuristic.getNextCourse(courses);
+                courses.remove(courses.indexOf(c));
+                //c.assignDay(days);
+                //resetDegreeNonConflictingCourses(c, conflicting_courses);
+    
+                for(Course course : c.conflicts){
+                    if(course.day != -1) availableColor[course.day] = false;
+                }
+    
+                for(int i = 1; i <= courses.size(); i++){
+                    if(availableColor[i]){
+                        c.assignDay(i);
+                        days = Math.max(days, i);
+                        break;
+                    }
+                }
+
+                Arrays.fill(availableColor, true);
             }
         }
     }
