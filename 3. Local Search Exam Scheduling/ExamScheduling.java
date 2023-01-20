@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class ExamScheduling {
     static String constructive_heuristic = "";
+    static String penalty_strategy = "";
     static ArrayList<Course> courses = new ArrayList<>();
     static ArrayList<Student> students = new ArrayList<>();
 
@@ -15,10 +16,13 @@ public class ExamScheduling {
 
         //System.out.println(constructive_heuristic);
 
-        ConflictGraph conflictGraph = new ConflictGraph(constructive_heuristic, courses, students);
+        ConflictGraph conflictGraph = new ConflictGraph(constructive_heuristic, penalty_strategy, courses, students);
         conflictGraph.createConflictGraph();
 
-        System.out.println("Days: " + conflictGraph.days);
+        System.out.println("Total Alloted Days: " + conflictGraph.days);
+        System.out.printf("Penalty After Constructive Heuristic: %.2f\n", conflictGraph.penalty_after_constructive);
+        System.out.printf("Penalty After Kempe Chain: %.2f\n", conflictGraph.penalty_after_kempe);
+        System.out.printf("Penalty After Pair Swap: %.2f\n", conflictGraph.penalty_after_pair_swap);
         // for(Course c : courses){
         //     System.out.println(c.courseId + " " + c.day);
         // }
@@ -33,7 +37,7 @@ public class ExamScheduling {
                 if(in == null) break;
 
                 String[] arr = in.split(" ");
-                courses.add(new Course(arr[0], arr[1]));
+                courses.add(new Course(arr[0], Integer.parseInt(arr[1])));
             }
 
             reader.close();
@@ -84,13 +88,19 @@ public class ExamScheduling {
     public static void selectMenu(){
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("----------SELECT SOLVER----------");
+        System.out.println("(1)Exponential Strategy\n(2)Linear Strategy\n");
+        String in = scanner.nextLine();
+        if(in.equals("1")) penalty_strategy = "exponential";
+        else penalty_strategy = "linear";
+
         System.out.println("----------SELECT CONSTRUCTIVE HEURISTIC----------");
         System.out.println("(1)Largest Degree\n(2)Saturation Degree\n(3)Largest Enrollment\n(4)Random Ordering\n");
-        String in = scanner.nextLine();
+        in = scanner.nextLine();
         if(in.equals("1")) constructive_heuristic = "largest degree";
         else if(in.equals("2")) constructive_heuristic = "saturation degree";
         else if(in.equals("3")) constructive_heuristic = "largest enrollment";
-        else constructive_heuristic = "random ordering";
+        else constructive_heuristic = "random";
         System.out.println("----------------------------------\n");
 
         scanner.close();
