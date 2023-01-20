@@ -5,10 +5,10 @@ public class Course {
     int day;
     int d; //used to calculate degree for second constructive heuristic
     String courseId;
-    String enrollment;
+    int enrollment;
     Set<Course> conflicts;
 
-    public Course(String courseId, String enrollment) {
+    public Course(String courseId, int enrollment) {
         this.day = -1;
         this.d = -1;
         this.courseId = courseId;
@@ -34,5 +34,14 @@ public class Course {
             if(c.day != -1) degree++;
         }
         return degree;
+    }
+
+    public Course getCourseFromIdx(int idx){
+        int i = 0;
+        for(Course c : this.conflicts){
+            if(i == idx) return c;
+            i++;
+        }
+        return null;
     }
 }
