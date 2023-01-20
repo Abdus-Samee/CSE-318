@@ -119,8 +119,10 @@ public class ConflictGraph {
             Comparator<Course> compareByDate = (Course o1, Course o2) -> o1.day - o2.day;
             Collections.sort(courses, compareByDate);
 
-            for(Course c1 : courses){
-                for(Course c2 : courses){
+            for(int i = 0; i < courses.size(); i++){
+                for(int j = i+1; j < courses.size(); j++){
+                    Course c1 = courses.get(i);
+                    Course c2 = courses.get(j);
                     int diff = Math.abs(c1.day - c2.day);
                     if(diff == 0) penalty += 10;
                     else if(diff == 1) penalty += 8;
@@ -144,8 +146,10 @@ public class ConflictGraph {
             Comparator<Course> compareByDate = (Course o1, Course o2) -> o1.day - o2.day;
             Collections.sort(courses, compareByDate);
 
-            for(Course c1 : courses){
-                for(Course c2 : courses){
+            for(int i = 0; i < courses.size(); i++){
+                for(int j = i+1; j < courses.size(); j++){
+                    Course c1 = courses.get(i);
+                    Course c2 = courses.get(j);
                     int diff = Math.abs(c1.day - c2.day);
 
                     if(diff == 0) penalty += 32;
