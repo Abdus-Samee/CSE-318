@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 public class ConflictGraph {
     int days;
@@ -206,50 +205,49 @@ public class ConflictGraph {
         }
     }
 
-    public void newKempe(){
-        Random rand = new Random();
+    public void execPairSwap(){
         List<Course> chain = new ArrayList<>();
-        List<Course> backup_courses = new ArrayList<>(courses);
 
         for(int i = 0; i < 1000; i++){
             chain.clear();
-            int u = rand.ints(1,courses.size()).findFirst().getAsInt();
-            Course c = courses.get(u);
-            while(c.conflicts.size() == 0) c = courses.get(rand.ints(1,courses.size()).findFirst().getAsInt());
-            Course c2 = c.getCourseFromIdx(0);
+
+            //take first course
+            int random = (int)(Math.random() * courses.size());
+            Course c = courses.get(random);
+            while(c.conflicts.size() == 0) c = courses.get((int)(Math.random() * courses.size()));
+
+            //take second course
+            random = (int)(Math.random() * courses.size());
+            Course c2 = courses.get(random);
+            while((c2.conflicts.size() == 0) || (c2.courseId.equals(c.courseId) || (c.conflicts.contains(c2)))) c2 = courses.get((int)(Math.random() * courses.size()));
+
+            //store backup
+            List<Course> backup_courses = new ArrayList<>(courses);
 
             double before = (penalty_strategy.equals("exponential")) ? getExponentialPenalty() : getLinearPenalty();
 
-            int d1 = c.day;
-            int d2 = c2.day;
-
-            kempeUtil(chain, c, d2);
-
+            //first kempe chain
+            int firstDay = c.day;
+            int secondDay = c.getCourseFromIdx(0).day;
+            kempeUtil(chain, c, secondDay);
             for(int j = 0; j < chain.size(); j++){
-                if(chain.get(j).day == d1) chain.get(j).day = d2;
-                else chain.get(j).day = d1;
+                if(chain.get(j).day == firstDay) chain.get(j).day = secondDay;
+                else chain.get(j).day = firstDay;
+            }
+
+            //second kempe chain
+            chain.clear();
+            firstDay = c2.day;
+            secondDay = c2.getCourseFromIdx(0).day;
+            kempeUtil(chain, c2, secondDay);
+            for(int j = 0; j < chain.size(); j++){
+                if(chain.get(j).day == firstDay) chain.get(j).day = secondDay;
+                else chain.get(j).day = firstDay;
             }
 
             double after = (penalty_strategy.equals("exponential")) ? getExponentialPenalty() : getLinearPenalty();
 
             if(after > before) courses = backup_courses;
         }
-    }
-
-    public void execPairSwap(){
-
-    }
-
-    //add the non-conflicting courses from conflicting_courses list to the same day
-    public void resetDegreeNonConflictingCourses(Course course, List<Course> conflicting_courses) {
-        List<Course> non_conflicting_courses = new ArrayList<>();
-        for(Course c : conflicting_courses){
-            if(!c.conflicts.contains(course)){
-                non_conflicting_courses.add(c);
-                c.assignDay(days);
-            }
-        }
-
-        for(Course c : non_conflicting_courses) conflicting_courses.remove(c);
     }
 }
