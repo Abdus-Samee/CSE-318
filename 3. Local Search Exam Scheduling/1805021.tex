@@ -1,0 +1,119 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage[table]{xcolor}
+\usepackage{float} 
+
+\title{%
+  \begin{center}
+        \vspace*{1cm}
+            
+        \Huge
+        \textbf{Artificial Intelligence}
+            
+        \vspace{0.5cm}
+        \LARGE
+        CSE - 318
+            
+        \vspace{1.5cm}
+            
+        \textbf{Offline 3: Exam Scheduling using Local Search}
+                        
+        \vspace{0.8cm}
+                        
+        \Large
+        Abdus Samee\\
+        ID: 1805021\\
+        Dept: CSE\\
+    \end{center}
+  } 
+
+\date{}
+
+\begin{document}
+
+\maketitle
+\newpage
+% \textbf{Exponential Penalty}
+\section{Exponential Penalty}
+
+\begin{table}[H]
+\caption{Largest Degree + Kempe + Pairswap}
+\label{tab:my-table}
+\begin{tabular}{|
+>{\columncolor[HTML]{F8FF00}}c |
+>{\columncolor[HTML]{F8FF00}}c 
+>{\columncolor[HTML]{F8FF00}}c |cccc|}
+\hline
+\cellcolor[HTML]{F8FF00} & \multicolumn{2}{c|}{\cellcolor[HTML]{F8FF00}Known Best Solution} & \multicolumn{4}{c|}{\begin{tabular}[c]{@{}c@{}}Scheme-1\\ Largest degree+Kempe+Pairswap\end{tabular}} \\ \cline{2-7} 
+\cellcolor[HTML]{F8FF00} & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}} & \cellcolor[HTML]{F8FF00} & \multicolumn{1}{c|}{} & \multicolumn{3}{c|}{Penalty} \\ \cline{5-7} 
+\multirow{-3}{*}{\cellcolor[HTML]{F8FF00}\begin{tabular}[c]{@{}c@{}}Benchmark\\ data\end{tabular}} & \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{F8FF00}Timeslots}} & \multirow{-2}{*}{\cellcolor[HTML]{F8FF00}Penalty} & \multicolumn{1}{c|}{\multirow{-2}{*}{Timeslots}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}After \\ Largest degree\end{tabular}} & \multicolumn{1}{c|}{After Kempe} & After Pairswap \\ \hline
+CARF92 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}32} & 3.74 & \multicolumn{1}{c|}{32} & \multicolumn{1}{c|}{10.61} & \multicolumn{1}{c|}{8.13} & 6.56 \\ \hline
+CARS91 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}35} & 4.42 & \multicolumn{1}{c|}{34} & \multicolumn{1}{c|}{11.50} & \multicolumn{1}{c|}{9.34} & 8.09 \\ \hline
+KFU93 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}20} & 12.96 & \multicolumn{1}{c|}{20} & \multicolumn{1}{c|}{46.52} & \multicolumn{1}{c|}{30.56} & 20.09 \\ \hline
+TRE92 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}23} & 7.75 & \multicolumn{1}{c|}{23} & \multicolumn{1}{c|}{15.89} & \multicolumn{1}{c|}{12.94} & 10.59 \\ \hline
+YOR83 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}21} & 34.84 & \multicolumn{1}{c|}{23} & \multicolumn{1}{c|}{64.30} & \multicolumn{1}{c|}{46.63} & 39.77 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\caption{Saturation Degree + Kempe + Pairswap}
+\label{tab:my-table}
+\begin{tabular}{|
+>{\columncolor[HTML]{F8FF00}}c |
+>{\columncolor[HTML]{F8FF00}}c 
+>{\columncolor[HTML]{F8FF00}}c |cccc|}
+\hline
+\cellcolor[HTML]{F8FF00} & \multicolumn{2}{c|}{\cellcolor[HTML]{F8FF00}Known Best Solution} & \multicolumn{4}{c|}{\begin{tabular}[c]{@{}c@{}}Scheme-1\\ Saturation degree+Kempe+Pairswap\end{tabular}} \\ \cline{2-7} 
+\cellcolor[HTML]{F8FF00} & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}} & \cellcolor[HTML]{F8FF00} & \multicolumn{1}{c|}{} & \multicolumn{3}{c|}{Penalty} \\ \cline{5-7} 
+\multirow{-3}{*}{\cellcolor[HTML]{F8FF00}\begin{tabular}[c]{@{}c@{}}Benchmark\\ data\end{tabular}} & \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{F8FF00}Timeslots}} & \multirow{-2}{*}{\cellcolor[HTML]{F8FF00}Penalty} & \multicolumn{1}{c|}{\multirow{-2}{*}{Timeslots}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}After \\ Saturation degree\end{tabular}} & \multicolumn{1}{c|}{After Kempe} & After Pairswap \\ \hline
+CARF92 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}32} & 3.74 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+CARS91 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}35} & 4.42 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+KFU93 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}20} & 12.96 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+TRE92 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}23} & 7.75 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+YOR83 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}21} & 34.84 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\caption{Largest Enrollment + Kempe + Pairswap}
+\label{tab:my-table}
+\begin{tabular}{|
+>{\columncolor[HTML]{F8FF00}}c |
+>{\columncolor[HTML]{F8FF00}}c 
+>{\columncolor[HTML]{F8FF00}}c |cccc|}
+\hline
+\cellcolor[HTML]{F8FF00} & \multicolumn{2}{c|}{\cellcolor[HTML]{F8FF00}Known Best Solution} & \multicolumn{4}{c|}{\begin{tabular}[c]{@{}c@{}}Scheme-1\\ Largest enrollment+Kempe+Pairswap\end{tabular}} \\ \cline{2-7} 
+\cellcolor[HTML]{F8FF00} & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}} & \cellcolor[HTML]{F8FF00} & \multicolumn{1}{c|}{} & \multicolumn{3}{c|}{Penalty} \\ \cline{5-7} 
+\multirow{-3}{*}{\cellcolor[HTML]{F8FF00}\begin{tabular}[c]{@{}c@{}}Benchmark\\ data\end{tabular}} & \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{F8FF00}Timeslots}} & \multirow{-2}{*}{\cellcolor[HTML]{F8FF00}Penalty} & \multicolumn{1}{c|}{\multirow{-2}{*}{Timeslots}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}After \\ Largest enrollment\end{tabular}} & \multicolumn{1}{c|}{After Kempe} & After Pairswap \\ \hline
+CARF92 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}32} & 3.74 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+CARS91 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}35} & 4.42 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+KFU93 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}20} & 12.96 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+TRE92 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}23} & 7.75 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+YOR83 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}21} & 34.84 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\caption{Random ordering + Kempe + Pairswap}
+\label{tab:my-table}
+\begin{tabular}{|
+>{\columncolor[HTML]{F8FF00}}c |
+>{\columncolor[HTML]{F8FF00}}c 
+>{\columncolor[HTML]{F8FF00}}c |cccc|}
+\hline
+\cellcolor[HTML]{F8FF00} & \multicolumn{2}{c|}{\cellcolor[HTML]{F8FF00}Known Best Solution} & \multicolumn{4}{c|}{\begin{tabular}[c]{@{}c@{}}Scheme-1\\ Random ordering+Kempe+Pairswap\end{tabular}} \\ \cline{2-7} 
+\cellcolor[HTML]{F8FF00} & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}} & \cellcolor[HTML]{F8FF00} & \multicolumn{1}{c|}{} & \multicolumn{3}{c|}{Penalty} \\ \cline{5-7} 
+\multirow{-3}{*}{\cellcolor[HTML]{F8FF00}\begin{tabular}[c]{@{}c@{}}Benchmark\\ data\end{tabular}} & \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{F8FF00}Timeslots}} & \multirow{-2}{*}{\cellcolor[HTML]{F8FF00}Penalty} & \multicolumn{1}{c|}{\multirow{-2}{*}{Timeslots}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}After \\ Random ordering\end{tabular}} & \multicolumn{1}{c|}{After Kempe} & After Pairswap \\ \hline
+CARF92 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}32} & 3.74 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+CARS91 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}35} & 4.42 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+KFU93 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}20} & 12.96 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+TRE92 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}23} & 7.75 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+YOR83 & \multicolumn{1}{c|}{\cellcolor[HTML]{F8FF00}21} & 34.84 & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Linear Penalty}
+
+\end{document}
