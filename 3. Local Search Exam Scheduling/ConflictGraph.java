@@ -113,15 +113,11 @@ public class ConflictGraph {
         this.courses = backup_courses;
         //System.out.println("After: " + this.courses.size());
 
-        if(this.penalty_strategy.equals("exponential")){
-            this.penalty_after_constructive = getExponentialPenalty();
-            execKempeChain();
-            this.penalty_after_kempe = getExponentialPenalty();
-            execPairSwap();
-            this.penalty_after_pair_swap = getExponentialPenalty();
-        }else{
-
-        }
+        this.penalty_after_constructive = (penalty_strategy.equals("exponential")) ? getExponentialPenalty() : getLinearPenalty();
+        execKempeChain();
+        this.penalty_after_kempe = (penalty_strategy.equals("exponential")) ? getExponentialPenalty() : getLinearPenalty();
+        execPairSwap();
+        this.penalty_after_pair_swap = (penalty_strategy.equals("exponential")) ? getExponentialPenalty() : getLinearPenalty();
     }
 
     public double getLinearPenalty(){
@@ -192,7 +188,7 @@ public class ConflictGraph {
     public void execKempeChain(){
         List<Course> chain = new ArrayList<>();
 
-        for(int i = 1; i <= 1000; i++){
+        for(int i = 1; i <= 2000; i++){
             chain.clear();
             int random = (int)(Math.random() * courses.size());
             Course c = courses.get(random);
@@ -227,7 +223,7 @@ public class ConflictGraph {
     }
 
     public void execPairSwap(){
-        for(int i = 1; i <= 1000; i++){
+        for(int i = 1; i <= 2000; i++){
             //System.out.println("Before starting: " + i + "-> " + getExponentialPenalty());
             List<Course> backup_courses = new ArrayList<>(courses);
     
@@ -242,6 +238,9 @@ public class ConflictGraph {
     
             double before = (penalty_strategy.equals("exponential")) ? getExponentialPenalty() : getLinearPenalty();
     
+            boolean conflict = checkConflict(c, c2);
+            if(conflict) continue;
+
             int firstDay = c.day;
             int secondDay = c2.day;
             c.day = secondDay;
@@ -256,5 +255,29 @@ public class ConflictGraph {
             }
             //System.out.println("After starting: " + i + "-> " + getExponentialPenalty());
         }
-    }    
+    }
+
+    public boolean checkConflict(Course c1, Course c2){
+        boolean res = false;
+        int firstDay = c1.day;
+        int secondDay = c2.day;
+
+        for(Course c : c1.conflicts){
+            if(c.day == secondDay){
+                res = true;
+                break;
+            }
+        }
+
+        if(!res){
+            for(Course c : c2.conflicts){
+                if(c.day == firstDay){
+                    res = true;
+                    break;
+                }
+            }
+        }
+
+        return res;
+    }
 }
